@@ -12,7 +12,7 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        Category::create(['name' => 'Electronics', 'slug' => 'electronics']);
-        Category::create(['name' => 'Clothing', 'slug' => 'clothing']);
+        Category::factory()->count(30)->create(); 
+
     }
 }

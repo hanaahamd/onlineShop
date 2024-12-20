@@ -4,14 +4,16 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\SubCategory;
-class SubCategorySeeder extends Seeder
+use App\Models\Product;  // تأكد من استيراد الـ Product
+
+class ProductsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        SubCategory::factory()->count(20)->create(); // إنشاء 20 فئة فرعية
+                Product::factory()->count(50)->create();
+
     }
 }

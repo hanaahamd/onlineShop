@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->double('price',10,2);
             $table->double('compare_price', 10, 2)->nullable();
-            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+           $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->foreignId('sub_category_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('brand_id')->nullable()->constrained()->onDelete('cascade');
             $table->enum('is_featured',['Yes','No'])->default('No');

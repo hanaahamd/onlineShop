@@ -15,6 +15,7 @@ use App\Http\Controllers\admin\ProductImageController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\AuthController;
 use App\Models\Brand;
 use App\Models\Product;
 
@@ -39,10 +40,33 @@ Route::get('/shop/{categorySlug?}/{subCategorySlug?}', [ShopController::class,'i
 Route::get('/product/{slug}',[ShopController::class,'product'])->name('front.product');
 Route::get('/cart', [CartController::class, 'cart'])->name('front.cart');
 Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('front.addToCart');
+Route::post('/update-cart', [CartController::class, 'updateCart'])->name('front.updateCart');
+Route::post('/delete-item', [CartController::class, 'deleteItem'])->name('front.deleteItem.cart');
+Route::get('/checkout', [CartController::class, 'checkout'])->name('front.checkout');
+Route::post('/process-checkout', [CartController::class, 'processCheckout'])->name('front.processCheckout');
 
-Route::group(['prefix' => 'admin'],function(){
 
-       Route::group(['middleware' => 'admin.guest'],function(){
+Route::group(['prefix' => 'account'],function(){
+
+ Route::group(['middleware' => 'guest'],function(){
+
+      Route::get('/login', [AuthController::class, 'login'])->name('account.login');
+      Route::post('/login', [AuthController::class, 'authenticate'])->name('account.authenticate');
+      Route::get('/register', [AuthController::class, 'register'])->name('account.register');
+      Route::post('/process-register', [AuthController::class, 'processRegister'])->name('account.processRegister');
+
+  });
+    Route::group(['middleware' => 'auth'], function () {
+        Route::get('/profile', [AuthController::class, 'profile'])->name('account.profile');
+        Route::get('/logout', [AuthController::class, 'logout'])->name('account.logout');
+
+
+    });
+
+});
+    Route::group(['prefix' => 'admin'], function () {
+
+      Route::group(['middleware' => 'admin.guest'],function(){
 
         Route::get('/login', [AdminLoginController::class, 'index'])->name('admin.login');
        Route::post('/authenticate', [AdminLoginController::class, 'authenticate'])->name('admin.authenticate');
